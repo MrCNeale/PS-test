@@ -1,32 +1,23 @@
-            - name: Run PSScriptAnalyzer
-  uses: microsoft/psscriptanalyzer-action@v1.1
-  with:
-    # Specifies the path to the scripts or module to be analyzed. Wildcard characters are supported.
-    path: # default is .\
-    # Uses only the custom rules defined in the specified paths to the analysis. To still use the built-in rules, add the -IncludeDefaultRules switch.
-    customRulePath: # optional
-    # Adds rules defined in subdirectories of the CustomRulePath location.
-    recurseCustomRulePath: # optional
-    # Omits the specified rules from the Script Analyzer test. Wildcard characters are supported.
-    excludeRule: # optional
-    # Invoke default rules along with Custom rules.
-    includeDefaultRules: # optional
-    # Runs only the specified rules in the Script Analyzer test.
-    includeRule: # optional
-    # After running Script Analyzer with all rules, this parameter selects rule violations with the specified severity.
-    severity: # optional
-    # Runs Script Analyzer on the files in the Path directory and all subdirectories recursively.
-    recurse: # optional
-    # Returns rules that are suppressed, instead of analyzing the files in the path.
-    suppressedOnly: # optional
-    # Fixes certain warnings which contain a fix in their DiagnosticRecord.
-    fix: # optional
-    # Exits PowerShell and returns an exit code equal to the number of error records.
-    enableExit: # optional
-    # File path that contains user profile or hash table for ScriptAnalyzer.
-    settings: # optional
-    # Specifies where the path for the sarif file
-    output: # default is results.sarif
-    # Exclude specific files from the sarif results. Uses regex pattern.
-    ignorePattern: # optional
-          
+name: GitHub Actions Demo
+on:
+  push:
+    branches:
+      - main
+jobs:
+  explore-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "📎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "🔡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Run PSScriptAnalyzer
+        uses: microsoft/psscriptanalyzer-action@v1.1
+        with:
+          # Specifies the path to the scripts or module to be analyzed. Wildcard characters are supported.
+          path: .\
+          # Runs Script Analyzer on the files in the Path directory and all subdirectories recursively.
+          recurse: true
+          output: results.sarif
